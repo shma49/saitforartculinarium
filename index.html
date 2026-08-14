@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Начинки для тортов</title>
+    <style>
+        /* ----- БАЗА ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fdf2f5 0%, #fce4ec 100%);
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* ----- ШАПКА ----- */
+        .header {
+            text-align: center;
+            padding: 40px 20px 25px;
+            margin-bottom: 35px;
+            background: linear-gradient(135deg, #f8bbd0, #f06292);
+            border-radius: 80px 80px 40px 40px;
+            color: #fff;
+            animation: headerPop 0.6s ease forwards;
+        }
+
+        @keyframes headerPop {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .header h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            text-shadow: 4px 4px 0 rgba(0,0,0,0.08);
+        }
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-top: 4px;
+        }
+
+        /* ----- ФИЛЬТРЫ (оставляем) ----- */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .filter-btn {
+            padding: 12px 30px;
+            border: 2px solid #f06292;
+            border-radius: 60px;
+            background: transparent;
+            color: #ad1457;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+        .filter-btn:hover {
+            background: #f06292;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(233, 30, 99, 0.25);
+        }
+        .filter-btn.active {
+            background: #d81b60;
+            border-color: #d81b60;
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.35);
+        }
+
+        /* ----- СЕТКА КАРТОЧЕК ----- */
+        .cakes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 30px;
+        }
+
+        /* ----- КАРТОЧКА ТОРТА (без цены и веса) ----- */
+        .cake-card {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 24px 20px 22px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+            border: 1px solid rgba(255, 182, 193, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+        }
+        .cake-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 25px 50px rgba(233, 30, 99, 0.15);
+            border-color: #f06292;
+        }
+
+        /* ----- СЕРДЕЧКО (пульсирует, как ты любишь) ----- */
+        .like-btn {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            font-size: 2.6rem;
+            line-height: 1;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: #ddd;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: 0.15s ease;
+        }
+        .like-btn:hover {
+            transform: scale(1.15);
+        }
+        .like-btn:active {
+            transform: scale(0.9);
+        }
+        .like-btn.selected {
+            color: #d81b60;
+            text-shadow: 0 0 10px rgba(216, 27, 96, 0.3);
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* ----- КАРТИНКА ----- */
+        .cake-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.10);
+            background: #fce4ec;
+        }
+        .cake-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .cake-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4a1a2c;
+            margin-bottom: 6px;
+        }
+        .cake-desc {
+            font-size: 0.95rem;
+            color: #5d3a4a;
+            line-height: 1.4;
+            min-height: 44px;
+        }
+
+        /* ----- АДАПТИВ ----- */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 2.4rem; }
+            .cakes-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .cake-card { padding: 18px 14px; }
+            .cake-image { width: 100px; height: 100px; }
+            .cake-name { font-size: 1.2rem; }
+            .like-btn { font-size: 2.2rem; }
+        }
+        @media (max-width: 440px) {
+            .cakes-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <h1>🍰 Начинки</h1>
+        <p>❤️ Нажмите на сердечко, чтобы отметить любимый торт</p>
+    </header>
+
+    <!-- ФИЛЬТРЫ -->
+    <div class="filters" id="filters"></div>
+
+    <!-- СЕТКА КАРТОЧЕК -->
+    <div class="cakes-grid" id="cakesGrid"></div>
+
+</div>
+
+<script>
+    // ----------------------------------------------
+    //   ДАННЫЕ (только названия, описания и категории)
+    // ----------------------------------------------
+    const cakes = [
+        { name: "Ореховый", category: "Ореховый", desc: "Бисквит с грецким орехом и кремом на основе вареной сгущенки." },
+        { name: "Ванильная ягода", category: "Ягодный", desc: "Ванильный бисквит, сливочный крем-чиз, ягодная прослойка конфи." },
+        { name: "Шоколадное наслаждение", category: "Шоколадный", desc: "Шоколадный бисквит с насыщенным шоколадным кремом." },
+        { name: "Марракеш", category: "Ореховый", desc: "Морковный бисквит с грецким орехом, апельсиновый курд, крем маскарпоне." },
+        { name: "Фисташка малина", category: "Ягодный", desc: "Фисташковый бисквит, конфи малина, крем-чиз с фисташкой." },
+        { name: "Клубника со сливками", category: "Ягодный", desc: "Миндальный бисквит, клубника в сливочном креме, пропитка на основе лимончелло." },
+        { name: "Сникерс", category: "Шоколадный", desc: "Шоколадный бисквит, соленая карамель, арахисовое пралине, арахисовый крем." },
+        { name: "Молочная девочка", category: "Классический", desc: "Нежный бисквит с кремом пломбир-клубника." },
+        { name: "Красный бархат", category: "Шоколадный", desc: "Насыщенный влажный бисквит, кули из ягод, крем-чиз." },
+        { name: "Вишня в шоколаде", category: "Ягодный", desc: "Бисквит шоколадный, вишневое кули, крем на основе маскарпоне." },
+        { name: "Медовик", category: "Классический", desc: "Медовые коржи со сливочно-сметанным кремом." },
+        { name: "Три шоколада", category: "Шоколадный", desc: "Муссовые слои на бисквитной основе (белый, молочный и темный шоколад)." },
+        { name: "Клубника в шоколаде", category: "Ягодный", desc: "Шоколадный бисквит с клубничным кули." },
+        { name: "Колибри", category: "Ореховый", desc: "Банановый бисквит с кубиками ананаса, грецкими орехами." },
+        { name: "Смородина лимон", category: "Ягодный", desc: "Лимонные коржи, смородиновая начинка и нежный крем." },
+        { name: "Орео", category: "Шоколадный", desc: "Шоколадные коржи с муссом и шоколадным кремом с печеньем." },
+        { name: "Ферреро роше", category: "Шоколадный", desc: "Изысканный торт с шоколадным велюровым покрытием." },
+        { name: "Наполеон", category: "Классический", desc: "Классический торт с нежным заварным кремом." },
+        { name: "Классическое удовольствие", category: "Классический", desc: "Классический бисквит, сливочный крем и грецкие орехи." },
+        { name: "Йогуртовый", category: "Классический", desc: "Нежный йогуртовый торт с начинкой манго." },
+        { name: "Шоколадный дуэт", category: "Шоколадный", desc: "Насыщенные шоколадные коржи с насыщенным шоколадным кремом." }
+    ];
+
+    // ----------------------------------------------
+    //   СОСТОЯНИЕ
+    // ----------------------------------------------
+    let currentFilter = "Все";
+    const liked = new Set(); // здесь будем хранить названия выбранных тортов
+
+    // ----------------------------------------------
+    //   ОТРИСОВКА КАРТОЧЕК
+    // ----------------------------------------------
+    function renderCakes(filterCategory = "Все") {
+        const grid = document.getElementById('cakesGrid');
+        grid.innerHTML = '';
+
+        const filtered = filterCategory === "Все"
+            ? cakes
+            : cakes.filter(cake => cake.category === filterCategory);
+
+        if (filtered.length === 0) {
+            grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">😕 Нет тортов в этой категории</p>`;
+            return;
+        }
+
+        filtered.forEach(cake => {
+            const card = document.createElement('div');
+            card.className = 'cake-card';
+
+            const isLiked = liked.has(cake.name);
+            const likeHtml = `<button class="like-btn ${isLiked ? 'selected' : ''}">${isLiked ? '❤️' : '♡'}</button>`;
+
+            card.innerHTML = `
+                ${likeHtml}
+                <div class="cake-image">
+                    <img src="images/${cake.name.toLowerCase().replace(/ /g, '_')}.jpg" alt="${cake.name}" loading="lazy" onerror="this.style.display='none'">
+                </div>
+                <div class="cake-name">${cake.name}</div>
+                <div class="cake-desc">${cake.desc}</div>
+            `;
+
+            // ---- ЛОГИКА СЕРДЕЧКА ----
+            const likeBtn = card.querySelector('.like-btn');
+            likeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    this.textContent = '♡';
+                    liked.delete(cake.name);
+                } else {
+                    this.classList.add('selected');
+                    this.textContent = '❤️';
+                    liked.add(cake.name);
+                }
+            });
+
+            grid.appendChild(card);
+        });
+    }
+
+    // ----------------------------------------------
+    //   ФИЛЬТРЫ
+    // ----------------------------------------------
+    function renderFilters() {
+        const container = document.getElementById('filters');
+        const categories = ["Все", ...new Set(cakes.map(c => c.category))];
+        container.innerHTML = '';
+
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn';
+            if (cat === currentFilter) btn.classList.add('active');
+            btn.textContent = cat;
+            btn.dataset.category = cat;
+
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.category;
+                renderCakes(currentFilter);
+            });
+
+            container.appendChild(btn);
+        });
+    }
+
+    // ----------------------------------------------
+    //   ЗАПУСК
+    // ----------------------------------------------
+    renderFilters();
+    renderCakes(currentFilter);
+</script>
+
+</body>
+</html>
