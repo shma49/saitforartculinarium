@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Начинки и декор</title>
+    <style>
+        /* ----------------------------------------------- */
+        /*   БАЗА                                            */
+        /* ----------------------------------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fdf2f5 0%, #fce4ec 100%);
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+            transition: background 0.8s ease;
+        }
+
+        /* ----------------------------------------------- */
+        /*   ТЕМЫ                                            */
+        /* ----------------------------------------------- */
+        body.theme-chocolate { background: linear-gradient(145deg, #2c1810 0%, #4a2c2a 100%); color: #fff; }
+        body.theme-berry { background: linear-gradient(145deg, #fce4ec 0%, #f8bbd0 100%); }
+        body.theme-nut { background: linear-gradient(145deg, #f5e6d3 0%, #e8d5c4 100%); }
+        body.theme-classic { background: linear-gradient(145deg, #fff8f0 0%, #f5ede4 100%); }
+
+        .particles-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            top: -10%;
+            font-size: 2.5rem;
+            opacity: 0;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0.2; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* ----------------------------------------------- */
+        /*   ШАПКА                                           */
+        /* ----------------------------------------------- */
+        .header {
+            text-align: center;
+            padding: 20px 20px 15px;
+            margin-bottom: 30px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: inherit;
+        }
+        .header nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .header nav a {
+            color: inherit;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: 0.2s ease;
+            opacity: 0.7;
+        }
+        .header nav a:hover {
+            opacity: 1;
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* ----------------------------------------------- */
+        /*   ГЕРОЙ                                           */
+        /* ----------------------------------------------- */
+        .hero {
+            text-align: center;
+            padding: 20px 0 30px;
+            margin-bottom: 30px;
+        }
+        .hero-image {
+            width: 100%;
+            max-height: 60vh;
+            object-fit: cover;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+        }
+        .scroll-indicator {
+            text-align: center;
+            margin-top: 25px;
+        }
+        .arrow-down {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border-right: 2px solid #888;
+            border-bottom: 2px solid #888;
+            transform: rotate(45deg);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: rotate(45deg) translate(0, 0); }
+            50% { transform: rotate(45deg) translate(6px, 6px); }
+        }
+
+        /* ----------------------------------------------- */
+        /*   ФИЛЬТРЫ                                         */
+        /* ----------------------------------------------- */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 35px;
+        }
+        .filter-btn {
+            padding: 10px 26px;
+            border: 2px solid rgba(255,255,255,0.25);
+            border-radius: 60px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(4px);
+            color: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+        .filter-btn:hover {
+            background: rgba(255,255,255,0.18);
+            transform: translateY(-2px);
+        }
+        .filter-btn.active {
+            background: rgba(255,255,255,0.22);
+            border-color: #fff;
+        }
+
+        /* ----------------------------------------------- */
+        /*   НАЧИНКИ                                         */
+        /* ----------------------------------------------- */
+        .cakes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        .cake-card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 32px;
+            padding: 20px 16px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: 0.3s ease;
+        }
+        .cake-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.95);
+        }
+        .cake-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 12px;
+            background: #fce4ec;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .cake-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+            transform: scale(1.15);
+            display: block;
+        }
+        .cake-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .cake-desc {
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.3;
+            min-height: 38px;
+        }
+
+        /* ===== СЕРДЕЧКИ ===== */
+        .like-btn {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+            color: #ddd;
+            z-index: 2;
+            padding: 4px;
+            line-height: 1;
+        }
+        .like-btn:hover {
+            transform: scale(1.2);
+        }
+        .like-btn.selected {
+            color: #d81b60;
+            animation: pulse 1.2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* ----------------------------------------------- */
+        /*   ДЕКОР — ВДОХНОВЛЯЮЩАЯ СЕКЦИЯ                   */
+        /* ----------------------------------------------- */
+        .decor-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 300;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .decor-hero {
+            text-align: center;
+            padding: 50px 20px 40px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 60px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .decor-description {
+            font-size: 1.15rem;
+            line-height: 1.6;
+            max-width: 620px;
+            margin: 0 auto 30px;
+            opacity: 0.8;
+        }
+
+        .decor-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0 20px;
+        }
+
+        .decor-sample {
+            width: 180px;
+            border-radius: 24px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s ease;
+            flex-shrink: 0;
+        }
+        .decor-sample:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        }
+        .decor-sample img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            display: block;
+        }
+        .decor-sample span {
+            display: block;
+            padding: 12px 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* ===== ПЕРСОНАЖ (ПОВАРИХА) + ОБЛАЧКО ===== */
+        .character {
+            position: fixed;
+            bottom: 40px;
+            right: 30px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none;
+            max-width: 90%;
+        }
+        .character.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+        .character.hide {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        .character-avatar {
+            font-size: 4.5rem;
+            line-height: 1;
+            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.1));
+            animation: float 3s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .character-bubble {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            padding: 16px 22px;
+            border-radius: 24px 24px 24px 4px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #1a1a1a;
+            max-width: 300px;
+            position: relative;
+        }
+        .character-bubble::before {
+            content: '';
+            position: absolute;
+            bottom: 12px;
+            left: -12px;
+            width: 16px;
+            height: 16px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 0 0 0 4px;
+            transform: rotate(12deg);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .character-bubble strong {
+            color: #d81b60;
+        }
+
+        /* ----------------------------------------------- */
+        /*   АДАПТИВ                                         */
+        /* ----------------------------------------------- */
+        @media (max-width: 600px) {
+            body { padding: 16px 12px 30px; }
+            .header nav { gap: 16px; font-size: 0.95rem; }
+            .hero-image { max-height: 40vh; border-radius: 28px; }
+            .cakes-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+            .cake-image { width: 90px; height: 90px; }
+            .cake-name { font-size: 1rem; }
+            .section-title { font-size: 1.6rem; }
+            .decor-hero { padding: 30px 12px; }
+            .decor-description { font-size: 1rem; }
+            .decor-gallery { gap: 12px; }
+            .decor-sample { width: 140px; }
+            .decor-sample span { font-size: 0.8rem; padding: 8px 6px; }
+            .character { bottom: 20px; right: 16px; left: 16px; }
+            .character-avatar { font-size: 3.2rem; }
+            .character-bubble { font-size: 0.85rem; padding: 12px 16px; max-width: 220px; }
+        }
+        @media (max-width: 440px) {
+            .cakes-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .cake-image { width: 80px; height: 80px; }
+            .decor-sample { width: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ПАДАЮЩИЕ ЧАСТИЦЫ -->
+<div class="particles-container" id="particlesContainer"></div>
+
+<!-- ПЕРСОНАЖ (ПОВАРИХА) + ОБЛАЧКО -->
+<div class="character" id="character">
+    <div class="character-avatar">👩‍🍳</div>
+    <div class="character-bubble">
+        <strong>❤️ Отметьте сердечком</strong> вкус, который вам понравился!
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <nav>
+            <a href="#nachinki">Начинки</a>
+            <a href="#dekor">Декор</a>
+        </nav>
+    </header>
+
+    <!-- ГЕРОЙ -->
+    <section class="hero">
+        <img class="hero-image" src="images/hero.jpg" alt="Декор и начинки" loading="lazy">
+        <div class="scroll-indicator">
+            <span class="arrow-down"></span>
+        </div>
+    </section>
+
+    <!-- ===== НАЧИНКИ ===== -->
+    <section id="nachinki">
+        <div class="filters" id="filters"></div>
+        <div class="cakes-grid" id="cakesGrid"></div>
+    </section>
+
+    <!-- ===== ДЕКОР ===== -->
+    <section id="dekor" class="decor-section">
+        <div class="decor-hero">
+            <h2 class="section-title">Декор</h2>
+            <p class="section-subtitle">Реализуем декор под вас</p>
+
+            <p class="decor-description">
+                Мы не ограничиваемся тем, что вы видите на фото.<br>
+                Расскажите нам свою идею — мы воплотим её в жизнь.
+            </p>
+
+            <div class="decor-gallery">
+                <div class="decor-sample">
+                    <img src="images/decor_шоколадные_цветы.jpg" alt="Пример декора" loading="lazy">
+                    <span>Цветы из шоколада</span>
+                </div>
+                <div class="decor-sample">
+                    <img src="images/decor_золотая_посыпка.jpg" alt="Пример декора" loading="lazy">
+                    <span>Золотая посыпка</span>
+                </div>
+                <div class="decor-sample">
+                    <img src="images/decor_марципановые_фигурки.jpg" alt="Пример декора" loading="lazy">
+                    <span>Фигурки из марципана</span>
+                </div>
+                <div class="decor-sample">
+                    <img src="images/decor_ягодное_ассорти.jpg" alt="Пример декора" loading="lazy">
+                    <span>Ягодное ассорти</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // =============================================
+    //   ПЕРСОНАЖ
+    // =============================================
+    const character = document.getElementById('character');
+
+    function showCharacter() {
+        character.classList.remove('hide', 'show');
+        setTimeout(() => {
+            character.classList.add('show');
+        }, 100);
+        setTimeout(() => {
+            character.classList.remove('show');
+            character.classList.add('hide');
+        }, 5500);
+    }
+
+    // =============================================
+    //   ДАННЫЕ (НАЧИНКИ)
+    // =============================================
+    const cakes = [
+        { name: "Ореховый", category: "Ореховый", desc: "Бисквит с грецким орехом и кремом на основе вареной сгущенки." },
+        { name: "Ванильная ягода", category: "Ягодный", desc: "Ванильный бисквит, сливочный крем-чиз, ягодная прослойка конфи." },
+        { name: "Шоколадное наслаждение", category: "Шоколадный", desc: "Шоколадный бисквит с насыщенным шоколадным кремом." },
+        { name: "Марракеш", category: "Ореховый", desc: "Морковный бисквит с грецким орехом, апельсиновый курд, крем маскарпоне." },
+        { name: "Фисташка малина", category: "Ягодный", desc: "Фисташковый бисквит, конфи малина, крем-чиз с фисташкой." },
+        { name: "Клубника со сливками", category: "Ягодный", desc: "Миндальный бисквит, клубника в сливочном креме." },
+        { name: "Сникерс", category: "Шоколадный", desc: "Шоколадный бисквит, соленая карамель, арахисовое пралине." },
+        { name: "Молочная девочка", category: "Классический", desc: "Нежный бисквит с кремом пломбир-клубника." },
+        { name: "Красный бархат", category: "Шоколадный", desc: "Насыщенный влажный бисквит, кули из ягод, крем-чиз." },
+        { name: "Вишня в шоколаде", category: "Ягодный", desc: "Бисквит шоколадный, вишневое кули, крем на основе маскарпоне." },
+        { name: "Медовик", category: "Классический", desc: "Медовые коржи со сливочно-сметанным кремом." },
+        { name: "Три шоколада", category: "Шоколадный", desc: "Муссовые слои на бисквитной основе (белый, молочный и темный шоколад)." },
+        { name: "Клубника в шоколаде", category: "Ягодный", desc: "Шоколадный бисквит с клубничным кули." },
+        { name: "Колибри", category: "Ореховый", desc: "Банановый бисквит с кубиками ананаса, грецкими орехами." },
+        { name: "Смородина лимон", category: "Ягодный", desc: "Лимонные коржи, смородиновая начинка и нежный крем." },
+        { name: "Орео", category: "Шоколадный", desc: "Шоколадные коржи с муссом и шоколадным кремом с печеньем." },
+        { name: "Ферреро роше", category: "Шоколадный", desc: "Изысканный торт с шоколадным велюровым покрытием." },
+        { name: "Наполеон", category: "Классический", desc: "Классический торт с нежным заварным кремом." },
+        { name: "Классическое удовольствие", category: "Классический", desc: "Классический бисквит, сливочный крем и грецкие орехи." },
+        { name: "Йогуртовый", category: "Классический", desc: "Нежный йогуртовый торт с начинкой манго." },
+        { name: "Шоколадный дуэт", category: "Шоколадный", desc: "Насыщенные шоколадные коржи с насыщенным шоколадным кремом." }
+    ];
+
+    // =============================================
+    //   СОСТОЯНИЕ
+    // =============================================
+    let currentFilter = "Все";
+    const liked = new Set();
+
+    // =============================================
+    //   ФУНКЦИИ ДЛЯ КАРТИНОК
+    // =============================================
+    function getImageName(name) {
+        return name.toLowerCase().replace(/ /g, '_') + '.jpg';
+    }
+
+    // =============================================
+    //   РЕНДЕР НАЧИНОК
+    // =============================================
+    function renderCakes(filterCategory = "Все") {
+        const grid = document.getElementById('cakesGrid');
+        grid.innerHTML = '';
+        const filtered = filterCategory === "Все" ? cakes : cakes.filter(c => c.category === filterCategory);
+        if (filtered.length === 0) {
+            grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:30px; color:#999;">Нет начинок в этой категории</p>`;
+            return;
+        }
+        filtered.forEach(cake => {
+            const card = document.createElement('div');
+            card.className = 'cake-card';
+            const isLiked = liked.has(cake.name);
+            const imgSrc = `images/${getImageName(cake.name)}`;
+            card.innerHTML = `
+                <button class="like-btn ${isLiked ? 'selected' : ''}" data-name="${cake.name}">${isLiked ? '❤️' : '♡'}</button>
+                <div class="cake-image">
+                    <img src="${imgSrc}" alt="${cake.name}" loading="lazy" onerror="this.outerHTML='<div style=\\'padding:20px;font-size:0.8rem;color:#999;\\'>${cake.name}</div>'">
+                </div>
+                <div class="cake-name">${cake.name}</div>
+                <div class="cake-desc">${cake.desc}</div>
+            `;
+            grid.appendChild(card);
+        });
+
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const name = this.dataset.name;
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    this.textContent = '♡';
+                    liked.delete(name);
+                } else {
+                    this.classList.add('selected');
+                    this.textContent = '❤️';
+                    liked.add(name);
+                }
+            });
+        });
+    }
+
+    // =============================================
+    //   ФИЛЬТРЫ
+    // =============================================
+    function renderFilters() {
+        const container = document.getElementById('filters');
+        const categories = ["Все", ...new Set(cakes.map(c => c.category))];
+        container.innerHTML = '';
+        categories.forEach(cat => {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn';
+            if (cat === currentFilter) btn.classList.add('active');
+            btn.textContent = cat;
+            btn.dataset.category = cat;
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.category;
+                renderCakes(currentFilter);
+                applyTheme(currentFilter);
+            });
+            container.appendChild(btn);
+        });
+    }
+
+    // =============================================
+    //   ТЕМЫ
+    // =============================================
+    const themes = {
+        'Все': { particles: ['🌸', '✨', '🌸', '✨', '🌸', '💗'], bodyClass: 'theme-berry' },
+        'Шоколадный': { particles: ['🍫', '🍫', '🍫', '🍫', '🍫'], bodyClass: 'theme-chocolate' },
+        'Ягодный': { particles: ['🍓', '🍒', '🍓', '🍒', '🍓', '🍇'], bodyClass: 'theme-berry' },
+        'Ореховый': { particles: ['🥜', '🌰', '🥜', '🌰', '🥜'], bodyClass: 'theme-nut' },
+        'Классический': { particles: ['🍰', '🧁', '🍰', '🧁', '🍰'], bodyClass: 'theme-classic' }
+    };
+
+    const particlesContainer = document.getElementById('particlesContainer');
+
+    function renderParticles(category) {
+        particlesContainer.innerHTML = '';
+        const theme = themes[category] || themes['Все'];
+        const emojis = theme.particles;
+        if (!emojis || emojis.length === 0) return;
+        for (let i = 0; i < 16; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.textContent = emojis[i % emojis.length];
+            p.style.left = Math.random() * 100 + '%';
+            p.style.fontSize = (1.5 + Math.random() * 2) + 'rem';
+            p.style.animationDuration = (12 + Math.random() * 14) + 's';
+            p.style.animationDelay = (Math.random() * 8) + 's';
+            p.style.opacity = 0.3 + Math.random() * 0.4;
+            particlesContainer.appendChild(p);
+        }
+    }
+
+    function applyTheme(category) {
+        document.body.className = '';
+        const theme = themes[category] || themes['Все'];
+        if (theme.bodyClass) document.body.classList.add(theme.bodyClass);
+        renderParticles(category);
+    }
+
+    // =============================================
+    //   ЗАПУСК
+    // =============================================
+    renderFilters();
+    renderCakes(currentFilter);
+    applyTheme(currentFilter);
+
+    // Показываем персонажа через 1.5 секунды
+    setTimeout(showCharacter, 1500);
+</script>
+
+</body>
+</html>
